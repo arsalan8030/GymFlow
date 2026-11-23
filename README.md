@@ -63,7 +63,7 @@ docker compose up -d mongodb
    npm run dev
    ```
 
-The client runs at `http://localhost:5173` and the API at `http://localhost:5000`. The API health endpoint is `/`.
+The client runs at `http://localhost:5173` and the API at `http://localhost:5000`. The API health endpoints are `/` and `/api/v1/health`.
 
 ## Initial accounts and development seed
 

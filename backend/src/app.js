@@ -33,14 +33,16 @@ app.use("/api/v1/auth", rateLimit({
     legacyHeaders: false
 }));
 
-app.get("/", (req, res) => {
+const healthCheck = (req, res) => {
     const connected = mongoose.connection.readyState === 1;
     return res.status(connected ? 200 : 503).json({
         success: connected,
         service: "GymFlow API",
         database: connected ? "connected" : "disconnected"
     });
-});
+};
+app.get("/", healthCheck);
+app.get("/api/v1/health", healthCheck);
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/admin", adminRoutes);
 app.use("/api/v1/owner", ownerRoutes);
