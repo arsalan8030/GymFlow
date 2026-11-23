@@ -9,16 +9,15 @@ import adminRoutes from "./routes/adminRoutes.js";
 import ownerRoutes from "./routes/ownerRoutes.js";
 import memberRoutes from "./routes/memberRoutes.js";
 import { errorHandler, notFound } from "./middleware/errorHandler.js";
+import { isAllowedOrigin } from "./config/allowedOrigins.js";
 
 const app = express();
-const allowedOrigins = (process.env.FRONTEND_URL || "http://localhost:5173")
-    .split(",").map(origin => origin.trim()).filter(Boolean);
 
 app.disable("x-powered-by");
 app.use(helmet());
 app.use(cors({
     origin(origin, callback) {
-        if (!origin || allowedOrigins.includes(origin)) return callback(null, true);
+        if (!origin || isAllowedOrigin(origin)) return callback(null, true);
         return callback(Object.assign(new Error("Origin is not allowed by CORS"), { statusCode: 403 }));
     },
     credentials: true

@@ -96,7 +96,7 @@ All gym-scoped records are queried using the authenticated user's `gymId`. Owner
 
 ## Environment
 
-Backend variables are documented in `backend/.env.example`; frontend variables are in `frontend/.env.example`. Production must use a managed replica-set MongoDB deployment, `MONGODB_TRANSACTIONS=true`, a strong unique JWT secret, HTTPS, a restricted `FRONTEND_URL`, and automated backups. SMTP settings are optional and are not required for local manual activation links.
+Backend variables are documented in `backend/.env.example`; frontend variables are in `frontend/.env.example`. In development, the API allows the local Vite origins `http://localhost:5173` and `http://127.0.0.1:5173` in addition to `FRONTEND_URL`. Production must use a managed replica-set MongoDB deployment, `MONGODB_TRANSACTIONS=true`, a strong unique JWT secret, HTTPS, a restricted `FRONTEND_URL`, and automated backups. Multiple allowed frontend origins can be comma-separated. SMTP settings are optional and are not required for local manual activation links.
 
 For production, build indexes before serving traffic:
 

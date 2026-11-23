@@ -2,6 +2,7 @@ import jwt from "jsonwebtoken";
 import User from "../models/User.js";
 import Gym from "../models/Gym.js";
 import HttpError from "../utils/HttpError.js";
+import { isAllowedOrigin } from "../config/allowedOrigins.js";
 
 export async function authenticate(req, res, next) {
     const header = req.headers.authorization || "";
@@ -10,9 +11,7 @@ export async function authenticate(req, res, next) {
         : req.cookies?.gymflow_access;
     if (!token) return next(new HttpError(401, "Authentication required"));
     if (!header.startsWith("Bearer ")) {
-        const allowedOrigins = (process.env.FRONTEND_URL || "http://localhost:5173")
-            .split(",").map(origin => origin.trim());
-        if (!req.headers.origin || !allowedOrigins.includes(req.headers.origin)) {
+        if (!isAllowedOrigin(req.headers.origin)) {
             return next(new HttpError(403, "Untrusted request origin"));
         }
     }
